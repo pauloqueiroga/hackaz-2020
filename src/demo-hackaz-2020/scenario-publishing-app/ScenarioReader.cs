@@ -57,10 +57,19 @@ namespace Position4All.DemoPublishingApp
                         var nextAnnotationTimeout = ResetAnnotations(filePath);
                         var state = new State();
                         var readUntil = 100;
+                        var previousMilestone = -1.0;
 
                         foreach (var record in scenario)
                         {
                             var (vehicleId, ellapsedMillis, position) = CsvToPosition(record);
+
+                            if (ellapsedMillis < previousMilestone)
+                            {
+                                _logger.LogWarning($"Time marker slipped backwards ({previousMilestone} to {ellapsedMillis}), moving on to the next scenario");
+                                break;
+                            }
+
+                            previousMilestone = ellapsedMillis;
 
                             if (ellapsedMillis > nextAnnotationTimeout)
                             {
