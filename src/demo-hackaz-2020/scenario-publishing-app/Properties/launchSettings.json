@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "scenario-publishing-app": {
+      "commandName": "Project"
+    }
+  }
+}
