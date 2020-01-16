@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NATS.Client;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,13 +10,16 @@ namespace Position4All.DemoSubscriberApp
     {
         private ILogger<Program> _logger;
         private readonly string _url;
+        private readonly string _subject;
+        private readonly Stopwatch _watch = new Stopwatch();
         private const int MaxMessages = 10000;
         private int _counter;
 
-        public Subscriber(ILogger<Program> logger, string url)
+        public Subscriber(ILogger<Program> logger, string url, string subject)
         {
             _logger = logger;
             _url = url;
+            _subject = subject;
         }
 
         internal async Task<bool> RunAsync(CancellationToken cancellationToken)
@@ -29,15 +33,18 @@ namespace Position4All.DemoSubscriberApp
             var connectionFactory = new ConnectionFactory();
             var options = ConnectionFactory.GetDefaultOptions();
             options.Url = _url ?? "nats://localhost:4222";
+            
 
             using (var connection = connectionFactory.CreateConnection(options))
             {
-                var subscription = connection.SubscribeAsync("test1", MessageReceived);
+                var subscription = connection.SubscribeAsync(_subject, MessageReceived);
                 _counter = 0;
+                _watch.Start();
 
                 while (!cancellationToken.IsCancellationRequested && _counter < MaxMessages)
                 {
-                    Task.Delay(2000).Wait(cancellationToken);
+                    _logger.LogInformation($"So far, {_counter} messages received");
+                    Task.Delay(60000).Wait(cancellationToken);
                 }
 
                 _logger.LogInformation($"Received {_counter} messages. Cancelled {cancellationToken.IsCancellationRequested}.");
@@ -47,7 +54,8 @@ namespace Position4All.DemoSubscriberApp
 
         public void MessageReceived(object sender, MsgHandlerEventArgs args)
         {
-            _logger.LogInformation($"Received {args.Message.Data[0]}");
+            _counter++;
+            _logger.LogInformation($"Received {args.Message.Data.Length} bytes (Message #{_counter:00000} @{_watch.ElapsedMilliseconds} ms)");
         }
     }
 }
