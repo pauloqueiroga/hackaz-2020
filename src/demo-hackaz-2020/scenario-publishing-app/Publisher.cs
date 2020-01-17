@@ -15,13 +15,15 @@ namespace Position4All.DemoPublishingApp
         private readonly ILogger _logger;
         private string _url;
         private readonly string _subject;
+        private readonly string _credentialsPath;
         private ConcurrentQueue<State> _stateQueue = new ConcurrentQueue<State>();
 
-        public Publisher(ILogger logger, string url, string subject)
+        public Publisher(ILogger logger, string url, string subject, string credentialsPath)
         {
             _logger = logger;
             _url = url;
             _subject = subject;
+            _credentialsPath = credentialsPath;
         }
 
         internal async Task<bool> RunAsync(CancellationToken cancellationToken)
@@ -49,6 +51,7 @@ namespace Position4All.DemoPublishingApp
                     var connectionFactory = new ConnectionFactory();
                     var options = ConnectionFactory.GetDefaultOptions();
                     options.Url = _url;
+                    options.SetUserCredentials(_credentialsPath);
 
                     using var connection = connectionFactory.CreateConnection(options);
 

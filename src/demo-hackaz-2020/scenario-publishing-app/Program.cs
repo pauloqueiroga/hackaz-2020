@@ -11,6 +11,7 @@ namespace Position4All.DemoPublishingApp
         private static string ServerUrl;
         private static string StreamSubject;
         private static string ScenariosPath = "./scenarios/";
+        private static string CredentialsPath = "./stream-service.creds";
 
         static int Main(string[] args)
         {
@@ -29,7 +30,7 @@ namespace Position4All.DemoPublishingApp
             var cancellationSource = new CancellationTokenSource();
 
             Logger.LogDebug("Creating Publisher");
-            var publisher = new Publisher(Logger, ServerUrl, StreamSubject);
+            var publisher = new Publisher(Logger, ServerUrl, StreamSubject, CredentialsPath);
             var longRunningPublisherTask = publisher.RunAsync(cancellationSource.Token);
 
             Logger.LogDebug("Creating Publisher");
@@ -66,6 +67,11 @@ namespace Position4All.DemoPublishingApp
                 ScenariosPath = args[2];
             }
 
+            if (args.Length >= 4)
+            {
+                CredentialsPath = args[3];
+            }
+
             return true;
         }
 
@@ -73,10 +79,12 @@ namespace Position4All.DemoPublishingApp
         {
             Console.WriteLine("USAGE: scenario-publishing-app <nats-server-url> <stream-subject> [scenarios-path]");
             Console.WriteLine("WHERE:");
-            Console.WriteLine("   <nats-server-url> - URL for the NATS server");
-            Console.WriteLine("   <stream-subject>  - Subject for the stream to be published");
-            Console.WriteLine("   [scenarios-path]  - Path for finding scenario files");
-            Console.WriteLine("                       (default if ommited: \"./scenarios/\")");
+            Console.WriteLine("   <nats-server-url>   - URL for the NATS server");
+            Console.WriteLine("   <stream-subject>    - Subject for the stream to be published");
+            Console.WriteLine("   [scenarios-path]    - Path for finding scenario files");
+            Console.WriteLine("                         (default if ommited: \"./scenarios/\")");
+            Console.WriteLine("   [credentials-path]  - Path for finding JWT credentials file");
+            Console.WriteLine("                         (default if ommited: \"./stream-service.creds\")");
         }
     }
 }
