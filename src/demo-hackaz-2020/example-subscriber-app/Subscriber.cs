@@ -33,7 +33,7 @@ namespace Position4All.DemoSubscriberApp
             var connectionFactory = new ConnectionFactory();
             var options = ConnectionFactory.GetDefaultOptions();
             options.Url = _url ?? "nats://localhost:4222";
-            
+            options.SetUserCredentials("./user.creds");
 
             using (var connection = connectionFactory.CreateConnection(options))
             {
