@@ -71,11 +71,6 @@ namespace HackathonAlert.API.Core.Services
 
                 var result = query.Select(alert => alert.ToAlertMessage()).ToList();
 
-                foreach (var alertMessage in result)
-                {
-                    alertMessage.SourceId = kvDict[alertMessage.SourceId];
-                }
-
                 return new OkObjectResult(result);
             }
         }

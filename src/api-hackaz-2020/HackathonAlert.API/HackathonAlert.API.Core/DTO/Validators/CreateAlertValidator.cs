@@ -11,11 +11,8 @@ namespace HackathonAlert.API.Core.DTO.Validators
             RuleFor(createAlert => createAlert.StreamId).NotEmpty().WithMessage("StreamId must be specified.");
 
             RuleFor(createAlert => createAlert.Type).IsInEnum().WithMessage("AlertType must be a valid enum value.");
-            // TODO: Do we let it?
-            RuleFor(createAlert => createAlert.Type).Must(type => type != WarningTypeMessage.Unspecified).WithMessage("AlertType must not be the default enum value.");
 
             RuleFor(createAlert => createAlert.Region).IsInEnum().WithMessage("AlarmRegion must be valid enum value.");
-            RuleFor(createAlert => createAlert.Region).Must(type => type != AlarmRegionMessage.Unspecified).WithMessage("AlarmRegion must not be default enum value.");
 
             RuleFor(createAlert => createAlert.Position).NotEmpty().SetValidator(new PositionMessageValidator());
             RuleFor(createAlert => createAlert.Target1Position).NotEmpty().SetValidator(new PositionMessageValidator());
