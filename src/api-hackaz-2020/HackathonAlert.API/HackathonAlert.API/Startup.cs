@@ -31,9 +31,12 @@ namespace HackathonAlert.API
 
             var connectionString = Configuration.GetSection("ConnectionString").Value;
             // TODO: Change this later
-           // var contextFactory = new MySqlAlertApiContextFactory(connectionString);
-            var contextFactory = new InMemoryApiContextFactory(connectionString);
-           // contextFactory.AlertContext().Database.Migrate();
+
+            // Uncomment this and comment the next two lines to test locally
+            // var contextFactory = new InMemoryApiContextFactory(connectionString);
+
+            var contextFactory = new MySqlAlertApiContextFactory(connectionString);
+            contextFactory.AlertContext().Database.Migrate();
 
             services.AddSingleton<IAlertContextFactory>(sp => contextFactory);
             services.AddScoped<IAlertService, AlertService>();
