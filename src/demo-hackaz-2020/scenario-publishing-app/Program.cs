@@ -12,6 +12,8 @@ namespace Position4All.DemoPublishingApp
         private static string StreamSubject;
         private static string ScenariosPath = "./scenarios/";
         private static string CredentialsPath = "./stream-service.creds";
+        private static string AlarmServerUrl = "https://localhost/api";
+        private static readonly AutoResetEvent _closing = new AutoResetEvent(false);
 
         static int Main(string[] args)
         {
@@ -34,20 +36,25 @@ namespace Position4All.DemoPublishingApp
             var longRunningPublisherTask = publisher.RunAsync(cancellationSource.Token);
 
             Logger.LogDebug("Creating Publisher");
-            var alarmLogger = new AlarmLogger(Logger, StreamSubject);
+            var alarmLogger = new AlarmLogger(Logger, StreamSubject, AlarmServerUrl);
             
             Logger.LogDebug("Creating Scenario Reader");
             var reader = new ScenarioReader(Logger, ScenariosPath, publisher, alarmLogger);
             var longRunningReaderTask = reader.RunAsync(cancellationSource.Token);
 
-            Logger.LogInformation("Running until user input is detected...");
-            
-            Console.ReadLine();
-            Logger.LogInformation("User input detected, cancelling long running tasks");
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
+            _closing.WaitOne();
+            Logger.LogInformation("Cancel Event detected, cancelling long running tasks");
             cancellationSource.Cancel();
             Task.Delay(3000).Wait();
             Logger.LogInformation("Goodbye.");
             return 0;
+        }
+
+        protected static void OnExit(object sender, ConsoleCancelEventArgs args)
+        {
+            Console.WriteLine("Exit");
+            _closing.Set();
         }
 
         private static bool ParseArgs(string[] args)
@@ -72,6 +79,11 @@ namespace Position4All.DemoPublishingApp
                 CredentialsPath = args[3];
             }
 
+            if (args.Length >= 5)
+            {
+                AlarmServerUrl = args[4];
+            }
+
             return true;
         }
 
@@ -85,6 +97,8 @@ namespace Position4All.DemoPublishingApp
             Console.WriteLine("                         (default if ommited: \"./scenarios/\")");
             Console.WriteLine("   [credentials-path]  - Path for finding JWT credentials file");
             Console.WriteLine("                         (default if ommited: \"./stream-service.creds\")");
+            Console.WriteLine("   [alarm-server-url]  - URL for the alarm reporting service's RESTful API");
+            Console.WriteLine("                         (default if ommited: \"https://localhost/api\")");
         }
     }
 }
