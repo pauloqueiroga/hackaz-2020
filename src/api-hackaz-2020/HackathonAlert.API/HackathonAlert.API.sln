@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackathonAlert.API", "HackathonAlert.API\HackathonAlert.API.csproj", "{9941CD95-C998-41F2-B2B4-CC232C6E3E3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackathonAlert.API", "HackathonAlert.API\HackathonAlert.API.csproj", "{9941CD95-C998-41F2-B2B4-CC232C6E3E3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackathonAlert.API.Core", "HackathonAlert.API.Core\HackathonAlert.API.Core.csproj", "{F8F4779C-A4BF-4C32-A866-905F3B1DCF34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackathonAlert.API.Core", "HackathonAlert.API.Core\HackathonAlert.API.Core.csproj", "{F8F4779C-A4BF-4C32-A866-905F3B1DCF34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackathonAlert.Api.Tests", "HackathonAlert.Api.Tests\HackathonAlert.Api.Tests.csproj", "{CE627882-A180-4124-8D76-A9FE0A940B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackathonAlert.Api.Tests", "HackathonAlert.Api.Tests\HackathonAlert.Api.Tests.csproj", "{CE627882-A180-4124-8D76-A9FE0A940B91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

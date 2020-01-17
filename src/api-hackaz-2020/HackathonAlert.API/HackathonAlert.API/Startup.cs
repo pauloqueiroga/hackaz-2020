@@ -30,8 +30,8 @@ namespace HackathonAlert.API
             services.AddScoped(sp => sp.GetService<IOptionsSnapshot<SourceList>>().Value);
 
             var connectionString = Configuration.GetSection("ConnectionString").Value;
-            // TODO: Change this later
 
+            // TODO: Make this work automatically in develop environments
             // Uncomment this and comment the next two lines to test locally
             // var contextFactory = new InMemoryApiContextFactory(connectionString);
 

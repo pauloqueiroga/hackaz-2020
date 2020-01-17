@@ -24,6 +24,7 @@ namespace HackathonAlert.API.Core.Domain
                 AlarmId = AlarmId,
                 StreamId = StreamId,
                 SourceId = SourceName,
+                TimePosted = TimePosted,
                 Type = (WarningTypeMessage) Type,
                 Region = (AlarmRegionMessage) Region
             };

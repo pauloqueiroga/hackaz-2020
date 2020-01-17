@@ -1,6 +1,4 @@
-﻿using NSwag.Annotations;
-
-namespace HackathonAlert.API.Core.DTO
+﻿namespace HackathonAlert.API.Core.DTO
 {
     public class CreateAlertRequest
     {

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\HackathonAlert.API\HackathonAlert.API.Core\DTO\AlarmRegionMessage.cs" Link="DTO\AlarmRegionMessage.cs" />
+    <Compile Include="..\..\..\HackathonAlert.API\HackathonAlert.API.Core\DTO\AlertMessage.cs" Link="DTO\AlertMessage.cs" />
+    <Compile Include="..\..\..\HackathonAlert.API\HackathonAlert.API.Core\DTO\CreateAlertRequest.cs" Link="DTO\CreateAlertRequest.cs" />
+    <Compile Include="..\..\..\HackathonAlert.API\HackathonAlert.API.Core\DTO\PositionMessage.cs" Link="DTO\PositionMessage.cs" />
+    <Compile Include="..\..\..\HackathonAlert.API\HackathonAlert.API.Core\DTO\WarningTypeMessage.cs" Link="DTO\WarningTypeMessage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
